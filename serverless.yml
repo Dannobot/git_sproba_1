@@ -31,6 +31,8 @@ functions:
       - http:
           path: /
           method: get
+
+          
   imageR:
     name: SERVERLESS_image_${self:provider.stage}
     handler: handler.imageR
