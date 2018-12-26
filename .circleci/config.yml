@@ -1,0 +1,40 @@
+version: 2 
+jobs:
+  build:
+    working_directory: ~/git_sproba_1
+    docker:
+      - image: circleci/node:8.10  
+      #python:3.6.4
+        environment:
+          PIPENV_VENV_IN_PROJECT: true
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: Install Serverless CLI and dependencies
+          command: |
+            sudo npm i -g serverless
+            npm install
+            npm install serverless-plugin-existing-s3
+            npm install --save serverless-s3-sync
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-
+        
+      # run tests!
+      - run: 
+          name: Run tests with coverage
+          command: npm test --coverage
+
+      - run:
+          name: Deploy application
+          command: sls deploy --stage dev
