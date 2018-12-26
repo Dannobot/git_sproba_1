@@ -10,7 +10,6 @@ jobs:
     steps:
       - checkout
 
-      # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-
@@ -30,7 +29,7 @@ jobs:
             - node_modules
           key: v1-dependencies-
         
-      # run tests!
+
       - run: 
           name: Run tests with coverage
           command: npm test --coverage
