@@ -1,5 +1,5 @@
+service: park-serverless
 
-service: SERVERLESS
 
 frameworkVersion: ">=1.1.0 <2.0.0"
 
@@ -12,64 +12,67 @@ provider:
   stage: ${opt:stage, 'dev'}     # production or dev
   name: aws
   runtime: python3.6
-  region: us-west-2
+  region: eu-central-1
+  Resources:
+    AssetsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: parknobot.static
+        AccessControl: PublicRe
   deploymentBucket:
-    name: dannobot.${self:provider.stage}
+    name: parknobot.${self:provider.stage}
+
+resources:
+  #Resources:
+    #AssetsBucket:
+      #Type: AWS::S3::Bucket
+      #Properties:
+        #BucketName: parknobot.static
+        #AccessControl: PublicRead
+  - ${file(resources/cognito-user-pool.yml)}
 
 
 custom:
   s3Sync:
-    - bucketName: dannobot.static
+    - bucketName: parknobot.static
       localDir: static
       acl: public-read
 
+
+
 functions:
   hello:
-    name: SERVERLESS_Test1_${self:provider.stage}
+    name: SERVERLESS_Test_${self:provider.stage}
     handler: handler.hello
     events:
       - http:
           path: /
           method: get
+          cors: true
 
-          
-  imageR:
-    name: SERVERLESS_image_${self:provider.stage}
-    handler: handler.imageR
+  admin:
+    name: Psevdo-Admin-${self:provider.stage}
+    handler: handler.psadmin
     events:
       - http:
-          path: /imageR
+          path: /psadmin
           method: get
+          cors: true
 
-
+  groupadd:
+    name: Groups-Addind-User-${self:provider.stage}
+    handler: handler.groupadd
+    events:
+      - http:
+          path: /groupadd
+          method: get
+          cors: true
 
 
 
 
 #---------------------------------------Створення---бакета--------------------------------------------------------------
 
-#resources:
-#  Resources:
-#    AssetsBucket:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: dannobot.static
-#        AccessControl: PublicRead
+
 
 #-----------------------------------------------------------------------------------------------------------------------
-
-#custom:
-#  bucket: testdannobot
-
-
-#    events:
-#      - existingS3:
-#        bucket: testdannobot
-#        name: vidro
-#        rules:
-#          - suffix: .png
-
-
-
-#deploymentBucket:
-#    name:

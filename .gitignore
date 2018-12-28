@@ -19,6 +19,7 @@ var/
 dist/
 .git
 
+
 # Serverless directories
 .serverless
 
