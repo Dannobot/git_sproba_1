@@ -22,6 +22,7 @@ provider:
   deploymentBucket:
     name: parknobot.${self:provider.stage}
 
+
 resources:
   #Resources:
     #AssetsBucket:
@@ -37,7 +38,6 @@ custom:
     - bucketName: parknobot.static
       localDir: static
       acl: public-read
-
 
 
 functions:
