@@ -53,7 +53,7 @@ functions:
       - http:
           path: /createUser_in_table
           method: post
-          # cors: true
+          cors: true
           # authorizer:
           #   arn: arn:aws:cognito-idp:eu-central-1:618057499192:userpool/eu-central-1_3QKfYAo3X
 
@@ -65,7 +65,7 @@ functions:
       - http:
           path: /outUser_data_fromTable
           method: post
-          # cors: true
+          cors: true
           # authorizer:
           #   arn: arn:aws:cognito-idp:eu-central-1:618057499192:userpool/eu-central-1_3QKfYAo3X
 
@@ -75,9 +75,9 @@ functions:
     handler: handler.getNews_data
     events:
       - http:
-          path: get/news_db
+          path: /news_db
           method: get
-          # cors: true
+          cors: true
           # authorizer:
           #   arn: arn:aws:cognito-idp:eu-central-1:618057499192:userpool/eu-central-1_3QKfYAo3X
 
@@ -88,7 +88,7 @@ functions:
       - http:
           path: /news_db
           method: post
-          # cors: true
+          cors: true
           # authorizer:
           #   arn: arn:aws:cognito-idp:eu-central-1:618057499192:userpool/eu-central-1_3QKfYAo3X
 
@@ -100,7 +100,7 @@ functions:
       - http:
           path: /news_db/delete
           method: post
-          # cors: true
+          cors: true
           # authorizer:
           #   arn: arn:aws:cognito-idp:eu-central-1:618057499192:userpool/eu-central-1_3QKfYAo3X
 
