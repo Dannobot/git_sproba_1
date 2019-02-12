@@ -75,7 +75,7 @@ functions:
     handler: handler.getNews_data
     events:
       - http:
-          path: /news_db
+          path: get/news_db
           method: get
           # cors: true
           # authorizer:
