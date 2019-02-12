@@ -81,12 +81,12 @@ def outUser_data_fromTable(event, context):
 def get_rds(event):
     # виводить тейбл news
     result = []
-    tables = ['Id','Title','Description','Author_id']
+    tables = ['Id','Title','Description','Author_id', 'Webi']
     result2 = []
     conn = psycopg2.connect(dbname='databasetest', user='dodo_mc', password='danqwe1996', host=hosty)
 
     with conn.cursor() as cursor:
-        cursor.execute('SELECT * FROM dev_newsbd')
+        cursor.execute('SELECT * FROM dev_newbd')
         conn.commit()
 
         for row in cursor:
@@ -114,8 +114,8 @@ def add_news_rds(event):
     
     with conn.cursor() as cursor:
         # add news
-        cursor.execute('INSERT INTO dev_newsbd (title, description, author_id) VALUES (%s, %s, %s)',
-            (event['Title'], event['Description'], event['Author_id'],))
+        cursor.execute('INSERT INTO dev_newbd (title, description, author_id, webi) VALUES (%s, %s, %s, %s)',
+            (event['Title'], event['Description'], event['Author_id'], event['Webi']))
         cursor.execute('SELECT * FROM dev_newsbd')
         conn.commit()
         
@@ -133,7 +133,7 @@ def delete_news_rds(event):
     conn = psycopg2.connect(dbname='databasetest', user='dodo_mc', password='danqwe1996', host=hosty)
     # delete news
     with conn.cursor() as cursor:
-        cursor.execute('DELETE FROM dev_newsbd WHERE id = {Id}'.format(**event))
+        cursor.execute('DELETE FROM dev_newbd WHERE id = {Id}'.format(**event))
         conn.commit()
         cursor.close()
 
