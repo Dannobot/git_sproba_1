@@ -102,7 +102,7 @@ def get_rds(event):
 def getNews_data(event, context):
     return {
         'statusCode': 200,
-        'body': get_rds(event)
+        'body': get_rds(event).result2
     }
 
 
