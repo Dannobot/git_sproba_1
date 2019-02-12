@@ -96,15 +96,15 @@ def get_rds(event):
         for i in result:
             result2.append(dict(zip(tables, i)))
             
-        return result2
+        return {
+        'statusCode': 200,
+        'body': result2
+    }
         cursor.close()
 
 def getNews_data(event, context):
-    return {
-        'statusCode': 200,
-        'body': get_rds(event).result2
-    }
-
+    return get_rds(event)
+    
 
 
 def add_news_rds(event):
@@ -136,6 +136,9 @@ def delete_news_rds(event):
         cursor.execute('DELETE FROM dev_newbd WHERE id = {Id}'.format(**event))
         conn.commit()
         cursor.close()
+        return {
+        'statusCode': 200
+    }
 
 
 def deleteNews_data(event, context):
