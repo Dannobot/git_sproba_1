@@ -25,10 +25,7 @@ def userGrup_triger(event, context):
         UserPoolId=USER_POOL_ID,
         Username=username,
         GroupName='Users')
-    return {
-        'statusCode': 200,
-        'body': y
-    }
+    return  y
 
 #############################RDS###############################
 def in_rds(event):
@@ -47,10 +44,8 @@ def in_rds(event):
         cursor.close()
 
 def createUser_in_table(event, context):
-    return {
-        'statusCode': 200,
-        'body': in_rds(event)
-    }
+    return  in_rds(event)
+    
 
 
 def out_rds(event):
@@ -72,14 +67,11 @@ def out_rds(event):
         return sresult
 
 def outUser_data_fromTable(event, context):
-    return {
-        'statusCode': 200,
-        'body': out_rds(event)
-    }
+    return out_rds(event)
 
 
-def get_rds(event):
-    # виводить тейбл news
+
+def getNews_data(event, context):
     result = []
     tables = ['Id','Title','Description','Author_id', 'Webi']
     result2 = []
@@ -95,15 +87,10 @@ def get_rds(event):
         
         for i in result:
             result2.append(dict(zip(tables, i)))
-            
-        return {
-        'statusCode': 200,
-        'body': result2
-    }
         cursor.close()
+        y = json.dumps(result2)
+        return y
 
-def getNews_data(event, context):
-    return get_rds(event)
     
 
 
@@ -136,9 +123,6 @@ def delete_news_rds(event):
         cursor.execute('DELETE FROM dev_newbd WHERE id = {Id}'.format(**event))
         conn.commit()
         cursor.close()
-        return {
-        'statusCode': 200
-    }
 
 
 def deleteNews_data(event, context):
@@ -186,14 +170,8 @@ def adminreg(event, context):
     user_id = str(uuid.uuid4())
     signed_up = sign_up(username, password)
     if signed_up == ERROR:
-        return     return {
-        'statusCode': 200,
-        'body': {'status': 'fail', 'msg': 'failed to sign up'}
-    }
+        return {'status': 'fail', 'msg': 'failed to sign up'} 
     if signed_up == SUCCESS:
         is_new = "true"
-        return     return {
-        'statusCode': 200,
-        'body': {'status': 'good', 'msg': 'sign up'}
-    }
+        return {'status': 'good', 'msg': 'sign up'}
 ####################################################################
