@@ -1,11 +1,11 @@
-service: serverless-dev
+service: FreePS-dev
 
 
 frameworkVersion: ">=1.1.0 <2.0.0"
 
 plugins:
   - serverless-plugin-existing-s3
-  - serverless-s3-sync
+  #- serverless-s3-sync
 
 
 provider:
@@ -17,136 +17,47 @@ provider:
     AssetsBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: siliconmadnes.${self:provider.stage}
+        BucketName: freeps.${self:provider.stage}
   deploymentBucket:
-    name: siliconmadnes.${self:provider.stage}
-
-# Resources:
-#   AssetsBucket:
-#     Type: AWS::S3::Bucket
-#     Properties:
-#       BucketName: parknobot.static
-#       AccessControl: PublicRead
-
-custom:
-  s3Sync:
-    - bucketName: siliconmadnes.static
-      localDir: static
-      acl: public-read
-
+    name: freeps.${self:provider.stage}
 
 
 functions:
-  userGrup_triger:
-    name: ${self:provider.stage}_userGrup_triger
-    handler: handler.userGrup_triger
-    integration: lambda
-
-  adminreg:
-    name: ${self:provider.stage}_admin_reg
-    handler: handler.adminreg
-    integration: lambda
-
-
-  createUser_in_table:
-    name: ${self:provider.stage}_createUser_in_table
-    handler: handler.createUser_in_table
+  ddbMGgetPS:
+    name: ${self:provider.stage}_FPS_get_MG
+    handler: handler.ddbMGgetPS
     events:
       - http:
-          path: /createUser_in_table
-          method: post
-          cors: true
-          integration: lambda
-          # authorizer:
-          #   arn: arn:aws:cognito-idp:eu-central-1:618057499192:userpool/eu-central-1_3QKfYAo3X
-
-
-  outUser_data_fromTable:
-    name: ${self:provider.stage}_outUser_data_fromTable
-    handler: handler.outUser_data_fromTable￼
-    events:
-      - http:
-          path: /outUser_data_fromTable
-          method: post
-          cors: true
-          integration: lambda
-          # authorizer:
-          #   arn: arn:aws:cognito-idp:eu-central-1:618057499192:userpool/eu-central-1_3QKfYAo3X
-
-
-  getNews_data:
-    name: ${self:provider.stage}_getNews_data
-    handler: handler.getNews_data
-    events:
-      - http:
-          path: /news_db
+          path: /FPS_get_P/FPS_get_MG
           method: get
           cors: true
           integration: lambda
-          # authorizer:
-          #   arn: arn:aws:cognito-idp:eu-central-1:618057499192:userpool/eu-central-1_3QKfYAo3X
 
-  addNews_data:
-    name: ${self:provider.stage}_addNews_data
-    handler: handler.addNews_data
+  ddbgetPS:
+    name: ${self:provider.stage}_FPS_get_P
+    handler: handler.ddbgetPS
     events:
       - http:
-          path: /news_db
-          method: post
+          path: /FPS_get_P
+          method: get
           cors: true
           integration: lambda
+
+#   createUser_in_table:
+#     name: ${self:provider.stage}_createUser_in_table
+#     handler: handler.createUser_in_table
+#     events:
+#       - http:
+#           path: /createUser_in_table
+#           method: post
+#           cors: true
+#           integration: lambda
           # authorizer:
           #   arn: arn:aws:cognito-idp:eu-central-1:618057499192:userpool/eu-central-1_3QKfYAo3X
 
 
-  deleteNews_data:
-    name: ${self:provider.stage}_deleteNews_data
-    handler: handler.deleteNews_data
-    events:
-      - http:
-          path: /news_db/delete
-          method: post
-          cors: true
-          integration: lambda
-          # authorizer:
-          #   arn: arn:aws:cognito-idp:eu-central-1:618057499192:userpool/eu-central-1_3QKfYAo3X
 
 
 
 
 
-
-
-#---------------------------------------Створення---бакета--тощо--------------------------------------------------------------
-
-# custom:
-#   s3Sync:
-    # - bucketName: my-static-site-assets # required 
-    #   bucketPrefix: assets/ # optional 
-    #   localDir: static/assets # required 
-    # - bucketName: my-other-site
-    #   localDir: static
-    #   acl: public-read # optional 
-      # followSymlinks: true # optional 
-      # defaultContentType: text/html # optional 
-      # params: # optional 
-      #   - index.html:
-      #       CacheControl: 'no-cache'
-      #   - "*.js":
-      #       CacheControl: 'public, max-age=31536000'
-# resources:
-#   Resources:
-#     AssetsBucket:
-#       Type: AWS::S3::Bucket
-#       Properties:
-#         BucketName: my1-static1-site-assets
-#     OtherSiteBucket:
-#       Type: AWS::S3::Bucket
-#       Properties:
-#         BucketName: my1-other1-site
-#         AccessControl: PublicRead
-#         WebsiteConfiguration:
-#           IndexDocument: index.html
-          # ErrorDocument: error.html
-
-#-----------------------------------------------------------------------------------------------------------------------
