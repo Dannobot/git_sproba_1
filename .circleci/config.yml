@@ -19,9 +19,9 @@ jobs:
           name: Install Serverless CLI and dependencies
           command: |
             sudo npm i -g serverless
-            npm install
             npm install serverless-plugin-existing-s3
             npm install --save serverless-s3-sync
+            npm install serverless-offline --save-dev
 
       - save_cache:
           paths:
