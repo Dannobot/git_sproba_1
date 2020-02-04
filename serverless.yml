@@ -19,7 +19,7 @@ functions:
   xml_imges:
     name: XML_AND_NO_MORE
     handler: xml_fucker.xml_Bimg
-    role: arn:aws:iam::618057499192:role/lambda_rds
+    # role: arn:aws:iam::618057499192:role/lambda_rds
     events:
       - http:
           path: /GET_XML_IMG

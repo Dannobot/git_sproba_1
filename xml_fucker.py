@@ -6,7 +6,7 @@ import os
 import sys
 from datetime import datetime
 from datetime import timedelta
-
+import json
 
 def order_points(pts):
   # initialzie a list of coordinates that will be ordered
@@ -214,7 +214,7 @@ def ananas():
                 main_iter = main_iter + 1
                 imgі = cv2.resize(dst, (64, 64))
                 data = cv2.imencode('.jpg', imgі)[1].tostring() # byte
-                A_list.append(data)
+                A_list.append(str(data))
                 # cv2.imwrite(f"/home/dannobot/Work/sls/freeps/dev_freePS/xml_fucker/PKLotA/Free/{repr(main_iter)}.jpg", imgі)
             else:
               main_iter_oc_per_hour = main_iter_oc_per_hour + 1
@@ -222,7 +222,7 @@ def ananas():
                 main_iter_oc = main_iter_oc + 1
                 imgі = cv2.resize(dst, (64, 64))
                 data = cv2.imencode('.jpg', imgі)[1].tostring() # byte
-                A_list.append(data)
+                A_list.append(str(data))
                 # with open(f"/home/dannobot/Work/sls/freeps/dev_freePS/xml_fucker/PKLotA/Occupied/Oc{repr(main_iter_oc)}.jpg", "wb") as ee:
                 #   ee.write(data)
                 # cv2.imwrite(f"/home/dannobot/Work/sls/freeps/dev_freePS/xml_fucker/PKLotA/Occupied/Oc{repr(main_iter_oc)}.jpg", imgі)
@@ -280,13 +280,16 @@ def ananas():
 
 def xml_Bimg(event, context):
   A, xml, data_big = ananas()
+  ad = {1:A, 2:xml, 3:str(data_big)}
   # for i in range(len(A)):
   #   with open(f"/home/dannobot/Work/sls/freeps/dev_freePS/xml_fucker/PKLotA/Occupied/Oc{i}.jpg", "wb") as ee:
   #     ee.write(A[i])
-  return [A, xml, data_big]
+  return ad
 
 # if __name__ == "__main__":
-#   ananas()
+#   A, xml, data_big = ananas()
+#   ad = {1:A, 2:xml, 3:str(data_big)}
+#   print(json.dumps(ad))
   # for i in range(len(gg)):
   #   with open(f"/home/dannobot/Work/sls/freeps/dev_freePS/xml_fucker/Oc{i}.jpg", "wb") as ee:
   #     ee.write(gg[i])
